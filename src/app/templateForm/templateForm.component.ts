@@ -630,14 +630,15 @@ export class TemplateFormComponent implements OnInit {
 
       this.powers = ['Really Smart', 'Turbulent Breeze',
                      'Super Hot', 'Weather Changer'];
-      this.question = verbalAbility.part1[0].instructions.sampleQuestions[0];
+      //this.question = verbalAbility.part1[0].instructions.sampleQuestions[0];
       this.questions = verbalAbility.part1[0].instructions.sampleQuestions;
+      console.log("This is the questions array",this.questions);
       console.log(this.question);
   }
 
   onSubmit() {
 
-    console.log("After Submit",this.question);
+    console.log("After Submit",this.questions);
     this.submitted = true;
   }
 }

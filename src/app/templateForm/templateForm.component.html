@@ -2,33 +2,36 @@
   <div *ngIf="!submitted">
     <h1>Template Driven Form</h1>
     <form (ngSubmit)="onSubmit()" #heroForm="ngForm">
-      <div class="form-group">
-        <label for="name">Question Name</label>
-        <input type="text" class="form-control" name="questionName" #name="ngModel" [(ngModel)]="question.question.name" required>
+      <div *ngFor="let questionLoop of questions;let i = index">
+          <div class="form-group">
+              <label for="name">Question Name</label>
+              <input type="text" class="form-control" name="questionName-{{i}}" #name="ngModel" [(ngModel)]="questionLoop.question.name">
+            </div>
+            <label for="name">Answers</label>
+            <div class="form-group" *ngFor="let a of questionLoop.answer">
+              <input type="text"  class="form-control" name="answer-{{i}}-{{a.id}}}" id="{{a.id}}" #name="ngModel" [(ngModel)]="a.name">
+            </div>
+            <div class="form-group">
+              <label for="power">Select a correct Answer</label>
+              <select class="form-control" name="correctAnswer-{{i}}" #power="ngModel" [(ngModel)]="questionLoop.correctAnswer">
+                <option *ngFor="let a of questionLoop.answer" [value]="a.id">
+                  {{ a.name }}
+                </option>
+              </select>
+              <div class="alert alert-danger" [hidden]="power.valid">Power is required</div>
+            </div>
+            <div class="form-group">
+                <label for="power">type</label>
+                <select class="form-control" name="type-{{i}}" #power="ngModel" [(ngModel)]="questionLoop.type">
+                  <option  [value]='"Radio"'>Radio </option>
+                  <option  [value]='"Checkbox"'>Checkbox </option>
+                  <option  [value]='"Img"'>Img </option>
+                  <option  [value]='"Text"'>Text </option>
+                </select>
+                <div class="alert alert-danger" [hidden]="power.valid">Power is required</div>
+              </div>
       </div>
-      <label for="name">Answers</label>
-      <div class="form-group" *ngFor="let a of question.answer">
-        <input type="text"  class="form-control" name="answer-{{a.id}}}" id="{{a.id}}" #name="ngModel" [(ngModel)]="a.name">
-      </div>
-      <div class="form-group">
-        <label for="power">Select a correct Answer</label>
-        <select class="form-control" name="correctAnswer" #power="ngModel" [(ngModel)]="question.correctAnswer">
-          <option *ngFor="let a of question.answer" [value]="a.id">
-            {{ a.name }}
-          </option>
-        </select>
-        <div class="alert alert-danger" [hidden]="power.valid">Power is required</div>
-      </div>
-      <div class="form-group">
-          <label for="power">type</label>
-          <select class="form-control" name="type" #power="ngModel" [(ngModel)]="question.type">
-            <option  [value]='"Radio"'>Radio </option>
-            <option  [value]='"Checkbox"'>Checkbox </option>
-            <option  [value]='"Img"'>Img </option>
-            <option  [value]='"Text"'>Text </option>
-          </select>
-          <div class="alert alert-danger" [hidden]="power.valid">Power is required</div>
-        </div>
+
       <button type="submit" class="btn btn-default" [disabled]="!heroForm.valid">Submit</button>
     </form>
   </div>
